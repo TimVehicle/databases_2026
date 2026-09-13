@@ -2,6 +2,45 @@
 
 Работа включает построение концептуальной, логической и физической моделей базы данных, выбор типов данных и ограничений целостности, а также реализацию модели в PostgreSQL. Для проверки работоспособности база данных была запущена в Docker, после чего выполнена проверка созданных таблиц и их связей.
 
+## Краткая инструкция по запуску
+
+1. Поместить `hw1.sql` и папку `pgdata` в одну папку на компьютере.
+2. В PowerShell перейти в эту папку и выполнить:
+
+```powershell
+docker run -d --name pg-homework `
+  -e POSTGRES_USER=student `
+  -e POSTGRES_PASSWORD=strongpass `
+  -e POSTGRES_DB=project_db `
+  -v "${PWD}/pgdata:/var/lib/postgresql/data" `
+  -v "${PWD}/hw1.sql:/docker-entrypoint-initdb.d/01_init.sql" `
+  -p 5432:5432 `
+  postgres:16
+```
+
+4. Проверить запуск:
+
+```powershell
+docker logs pg-homework
+```
+
+В конце вывода должно появиться:
+
+```text
+database system is ready to accept connections
+```
+
+5. Подключиться к базе через DBeaver:
+
+   * **Host:** `localhost`
+   * **Port:** `5432`
+   * **Database:** `project_db`
+   * **User:** `student`
+   * **Password:** `strongpass`
+
+6. Таблицы находятся в схеме `hw1`.
+
+
 ## Соответствие бизнес-домена и модели
 
 | **Бизнес-требование** | **Как реализовано** |
